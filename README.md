@@ -29,3 +29,20 @@ The repository contains these files.
 - `test-server.py` is an `http.server`-based simple web-server
 
 All files can be modified to fit the needs and purposes of your app!
+
+## Tips & Tweaks
+
+### Google App Engine
+
+To serve your Pyodide-app via Google App Engine, add the following lines to your `app.yaml` file and modify them when needed.
+
+```yaml
+handlers:
+	- url: /app/s/pyodide/(.*\.wasm)$
+	  static_files: mex-editor/pyodide/\1
+	  upload: app/pyodide/.*\.wasm$
+	  mime_type: application/wasm
+	- url: /app/s
+	  static_dir: app
+```
+

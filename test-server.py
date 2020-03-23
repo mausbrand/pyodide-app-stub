@@ -16,10 +16,11 @@ class pyodideHttpServer(SimpleHTTPRequestHandler):
         #self.send_header("Access-Control-Allow-Origin", "*")
         super().end_headers()
 
-
+port = 8080
 Handler = pyodideHttpServer
 
 socketserver.TCPServer.allow_reuse_address = True
-with socketserver.TCPServer(("", 8080), Handler) as httpd:
+with socketserver.TCPServer(("", port), Handler) as httpd:
+    print("http://localhost:%d" % port)
     httpd.allow_reuse_address = True
     httpd.serve_forever()

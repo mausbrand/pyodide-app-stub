@@ -15,7 +15,7 @@ class app {
 			promises.push(
 				new Promise((resolve, reject) => {
 					let file = files[f];
-					let url = baseURL + file;
+					let url = (baseURL ? baseURL + "/" : "") + file;
 
 					fetch(url, {}).then((response) => {
 						if (response.status === 200)
