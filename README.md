@@ -30,6 +30,10 @@ The repository contains these files.
 
 All files can be modified to fit the needs and purposes of your app!
 
+## Real world apps
+
+This app stub is only a minimal example. The currently most prominent real world example for an app written using this technique is our [viur-vi](https://github.com/viur-framework/viur-vi/tree/pyodide) administration tool. We used it also for several closed-source projects for our customers. 
+
 ## Tips & Tweaks
 
 ### Google App Engine
@@ -38,11 +42,11 @@ To serve your Pyodide-app via Google App Engine, add the following lines to your
 
 ```yaml
 handlers:
-	- url: /app/s/pyodide/(.*\.wasm)$
-	  static_files: mex-editor/pyodide/\1
-	  upload: app/pyodide/.*\.wasm$
-	  mime_type: application/wasm
-	- url: /app/s
-	  static_dir: app
+- url: /app/s/pyodide/(.*\.wasm)$
+  static_files: mex-editor/pyodide/\1
+  upload: app/pyodide/.*\.wasm$
+  mime_type: application/wasm
+- url: /app/s
+  static_dir: app
 ```
 
