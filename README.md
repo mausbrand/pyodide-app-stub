@@ -43,7 +43,7 @@ To serve your Pyodide-app via Google App Engine, add the following lines to your
 ```yaml
 handlers:
 - url: /app/s/pyodide/(.*\.wasm)$
-  static_files: mex-editor/pyodide/\1
+  static_files: app/pyodide/\1
   upload: app/pyodide/.*\.wasm$
   mime_type: application/wasm
 - url: /app/s
