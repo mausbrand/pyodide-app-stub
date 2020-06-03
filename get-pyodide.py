@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 import os, sys, tarfile, urllib.request
 
-VERSION = "0.14.3"
+VERSION = "0.15.0"
 URL = "https://github.com/iodide-project/pyodide/releases/download/{VERSION}/pyodide-build-{VERSION}.tar.bz2"
 
 download = VERSION + ".tar.bz2"
 
-sys.stdout.write("Downloading Pyodide...")
+sys.stdout.write(f"Downloading Pyodide v{VERSION}...")
 sys.stdout.flush()
 urllib.request.urlretrieve(URL.format(VERSION=VERSION), download)
 print("Done")
