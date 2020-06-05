@@ -1,6 +1,6 @@
 # pyodide-app-stub
 
-This is a basic stub for creating a new Python-based webapp using [Pyodide](https://github.com/iodide-project/pyodide) and the [`viur-html5` library](https://github.com/viur-framework/viur-html5/tree/pyodide).
+This is a stub for creating a new Python-based webapp with [Pyodide](https://github.com/iodide-project/pyodide) and the [`viur-html5` library](https://github.com/viur-framework/viur-html5/tree/pyodide).
 
 ## Setup
 
@@ -50,3 +50,39 @@ handlers:
   static_dir: app
 ```
 
+### Apache Webserver
+
+For apache web-server, this `.htaccess` configuration helped to serve the app.
+
+```
+RewriteEngine off
+Options -ExecCGI +Indexes 
+IndexOrderDefault Descending Date
+
+#Header always set Access-Control-Allow-Origin "*"
+#Header always set Access-Control-Allow-Methods GET
+
+<FilesMatch "\.py$">
+	Options +Indexes -ExecCGI -Multiviews
+	Order allow,deny
+	Allow from all
+	RemoveHandler .py
+	AddType text/plain .py
+</FilesMatch>
+
+<FilesMatch "\.data$">
+	Options +Indexes -ExecCGI -Multiviews
+	Order allow,deny
+	Allow from all
+	RemoveHandler .data
+	AddType application/octet-stream .data
+</FilesMatch>
+
+<FilesMatch "\.wasm$">
+	Options +Indexes -ExecCGI -Multiviews
+	Order allow,deny
+	Allow from all
+	RemoveHandler .wasm
+	AddType application/wasm .wasm
+</FilesMatch>
+```
