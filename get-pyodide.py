@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os, sys, tarfile, urllib.request
+import os, sys, tarfile, json, urllib.request
 
 VERSION = "0.15.0"
 URL = "https://github.com/iodide-project/pyodide/releases/download/{VERSION}/pyodide-build-{VERSION}.tar.bz2"
@@ -20,6 +20,7 @@ extracted = []
 for member in tar.getmembers():
 	if not (member.name.startswith("pyodide.")
 			or member.name.startswith("micropip.")
+			or member.name.startswith("setuptools.")
 			or member.name.startswith("distlib.")
 			or member.name in ["console.html", "renderedhtml.css"]
 		):
@@ -32,7 +33,7 @@ for member in tar.getmembers():
 tar.close()
 
 if not extracted:
-	print("This doesn't look like a Pyodide build package!")
+	print("This doesn't look like a Pyodide release package!")
 	sys.exit(1)
 
 # Patch console.html to use pyodide.js
@@ -46,9 +47,20 @@ with open("pyodide/console.html", "w") as f:
 		"""<script src="./pyodide.js"></script>"""
 	))
 
-# Write a minimal packages.json with micropip and distlibs pre-installed.
+# Write a minimal packages.json with micropip, setuptools and distlibs pre-installed.
 f = open("pyodide/packages.json", "w")
-f.write("""{"dependencies": {"micropip": ["distlib"], "distlib": []}, "import_name_to_package_name": {"distlib": "distlib", "micropip": "micropip"}}""")
+f.write(json.dumps({
+	"dependencies": {
+		"micropip": ["distlib"],
+		"distlib": [],
+		"setuptools": []
+	},
+	"import_name_to_package_name": {
+		"distlib": "distlib",
+		"setuptools":"setuptools",
+		"micropip": "micropip"
+	}
+}))
 f.close()
 
 os.remove(download)

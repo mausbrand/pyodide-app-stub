@@ -2,8 +2,11 @@ class app {
 
 	constructor(modules, invocation){
 		languagePluginLoader.then(() => {
-			this.fetchSources(modules).then(() => {
-				window.pyodide.runPythonAsync("import " + Object.keys(modules).join("\nimport ") + "\n" + invocation + "\n").then(() => this.initializingComplete());
+			// If you don't require for pre-loaded Python packages, remove this promise below.
+			window.pyodide.runPythonAsync("import setuptools, micropip").then(()=>{
+				this.fetchSources(modules).then(() => {
+					window.pyodide.runPythonAsync("import " + Object.keys(modules).join("\nimport ") + "\n" + invocation + "\n").then(() => this.initializingComplete());
+				});
 			});
 		});
 	}
