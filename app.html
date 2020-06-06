@@ -3,10 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.min.css"/>
+	
+    <!-- flip comments below to use local pyodide -->
+	<!-- Use Pyodide from CDN (default) -->
+    <script src="https://pyodide-cdn2.iodide.io/v0.15.0/full/pyodide.js"></script>
+
+	<!-- Use Pyodide from local pyodide/-folder -->
+	<!--
 	<script>
 		window.languagePluginUrl = "./pyodide/";
 	</script>
-	<script src="./pyodide/pyodide.js"></script>
+    <script src="./pyodide/pyodide.js"></script>
+	-->
+	
 	<script src="app.js"></script>
 </head>
 <body class="is-loading">
