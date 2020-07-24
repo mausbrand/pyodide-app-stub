@@ -1,13 +1,13 @@
-class app {
+class apploader {
 
 	constructor(modules, invocation){
-		languagePluginLoader.then(() => {
-			// If you don't require for pre-loaded Python packages, remove this promise below.
-			window.pyodide.runPythonAsync("import setuptools, micropip").then(()=>{
+		window.languagePluginLoader.then(() => {
+			// If you require for pre-loaded Python packages, enable the promise below.
+			//window.pyodide.runPythonAsync("import setuptools, micropip").then(()=>{
 				this.fetchSources(modules).then(() => {
 					window.pyodide.runPythonAsync("import " + Object.keys(modules).join("\nimport ") + "\n" + invocation + "\n").then(() => this.initializingComplete());
 				});
-			});
+			//});
 		});
 	}
 
@@ -65,10 +65,19 @@ class app {
 		{
 			promises.push(
 				new Promise((resolve, reject) => {
-					fetch(`${modules[module]}/files.json`, {}).then((response) => {
+					let mapfile = `${modules[module]}/files.json`;
+					fetch(mapfile, {}).then((response) => {
 						if (response.status === 200) {
 							response.text().then((list) => {
-								let files = JSON.parse(list);
+								let files = [];
+
+								try {
+									files = JSON.parse(list);
+								}
+								catch (e) {
+									console.error(`Unable to parse ${mapfile} properly, check for correct config of ${module}`);
+									return reject();
+								}
 
 								this.loadSources(module, modules[module], files).then(() => {
 									resolve();
@@ -98,6 +107,12 @@ class app {
 	}
 }
 
-(function () {
-	window.top.app = new app({"app": "."}, "app.start()");
-})();
+window.addEventListener(
+	"load",
+	(event) => {
+		window.apploader = new apploader({
+			"app": ".",
+		},
+		"app.start()");
+	}
+);

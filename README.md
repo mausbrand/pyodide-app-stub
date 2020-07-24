@@ -1,5 +1,7 @@
 # pyodide-app-stub
 
+**Note: This repository is now superseded by [flare](https://github.com/mausbrand/flare).**
+
 This is a stub for creating a new Python-based webapp with [Pyodide](https://github.com/iodide-project/pyodide) and the [`viur-html5` library](https://github.com/viur-framework/viur-html5/tree/pyodide).
 
 ## Setup
@@ -8,7 +10,7 @@ Clone the repository including its submodule (html5) into a directory of your ch
 
 ## Usage
 
-To immediatelly test your app, run `./test-server.py` and open [http://localhost:8080](http://localhost:8080).
+To immediately test your app, run `./test-server.py` and open [http://localhost:8080](http://localhost:8080).
 
 When Python modules are added, run `./gen-files-json.py` to build the Python files mapping that is used by the app boostrapper.
 
